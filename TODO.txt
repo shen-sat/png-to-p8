@@ -1,0 +1,40 @@
+TODO:
+- MVP 1:
+	- input: an array of tuples representing a red square
+	- output: a pair of x and y coordinates representing a red rect
+
+End MVP:
+- input: png
+- output: a string for a p8 function that represents the png as
+p8 code using rectfill, line, pset.
+
+Other MVPs:
+- black is treated as transparent by p8. But what if it is included in a sprite (as an outline color for example)?
+
+FINDINGS:
+- opencv article: https://pyimagesearch.com/2021/01/20/opencv-getting-and-setting-pixels/
+- pico8 palette rgb data: https://pico-8.fandom.com/wiki/Palette
+
+Nice-to-haves:
+- params for the output function so that user can specify where to draw the sprite
+on the screen
+- error handling
+	- file is not png
+	- file is empty
+	- colors not in pico8 palette
+- flags to give additoinal output like:
+	- token count of output
+	- colors used
+	- dimensions of png
+
+DONE:
+- MVP 0:
+	- read article
+	- what is the most efficinet way to get neighbouring pixels
+	- create two PNGs
+		- 1 red pixel
+		- 1 multicolored square, 2x2
+	- what does opencv output for the above?
+	- what test framework can you use?
+	- create a hash
+	- set up a test for 1 == 1

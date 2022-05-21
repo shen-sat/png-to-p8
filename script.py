@@ -18,6 +18,45 @@ import unittest
 
 class CreatePixelDataCase(unittest.TestCase):
 
+  def test_1x1_red(self):
+    
+    image = cv.imread('1x1-red.png')
+    result = create_pixel_data(image)
+    expected_result = {
+      0: { 0: [255, 0, 77]}
+    }
+    self.assertEqual(result, expected_result)
+
+  def test_2x2_red(self):
+    
+    image = cv.imread('2x2-red.png')
+    result = create_pixel_data(image)
+    expected_result = {
+      0: { 0: [255, 0, 77], 1: [255, 0, 77] },
+      1: { 0: [255, 0, 77], 1: [255, 0, 77] }
+    }
+    self.assertEqual(result, expected_result)
+
+  def test_2x2_red_red_blue_blue(self):
+    
+    image = cv.imread('2x2-red-red-blue-blue.png')
+    result = create_pixel_data(image)
+    expected_result = {
+      0: { 0: [255, 0, 77], 1: [41, 173, 255] },
+      1: { 0: [255, 0, 77], 1: [41, 173, 255] }
+    }
+    self.assertEqual(result, expected_result)
+
+  def test_2x2_red_blue_red_blue(self):
+    
+    image = cv.imread('2x2-red-blue-red-blue.png')
+    result = create_pixel_data(image)
+    expected_result = {
+      0: { 0: [255, 0, 77], 1: [255, 0, 77] },
+      1: { 0: [41, 173, 255], 1: [41, 173, 255] }
+    }
+    self.assertEqual(result, expected_result)
+
   def test_2x2_red_blue_green_yellow(self):
     
     image = cv.imread('2x2-red-blue-green-yellow.png')
@@ -28,12 +67,5 @@ class CreatePixelDataCase(unittest.TestCase):
     }
     self.assertEqual(result, expected_result)
 
-  def test_1x1_red(self):
-    
-    image = cv.imread('1x1-red.png')
-    result = create_pixel_data(image)
-    expected_result = {
-      0: { 0: [255, 0, 77]}
-    }
-    self.assertEqual(result, expected_result)
+  
 

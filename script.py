@@ -4,11 +4,11 @@ def create_pixel_data(image):
   pixel_data = {}
   for row_index, row in enumerate(image):
     for cell_index, cell in enumerate(row):
-      if cell_index in pixel_data:
-        pixel_data[cell_index][row_index] = [cell[2],cell[1],cell[0]]
+      if row_index in pixel_data:
+        pixel_data[row_index][cell_index] = [cell[2],cell[1],cell[0]]
       else:
-        pixel_data[cell_index] = {}
-        pixel_data[cell_index][row_index] = [cell[2],cell[1],cell[0]]
+        pixel_data[row_index] = {}
+        pixel_data[row_index][cell_index] = [cell[2],cell[1],cell[0]]
 
   return pixel_data
 
@@ -42,8 +42,8 @@ class CreatePixelDataCase(unittest.TestCase):
     image = cv.imread('2x2-red-red-blue-blue.png')
     result = create_pixel_data(image)
     expected_result = {
-      0: { 0: [255, 0, 77], 1: [41, 173, 255] },
-      1: { 0: [255, 0, 77], 1: [41, 173, 255] }
+      0: { 0: [255, 0, 77], 1: [255, 0, 77] },
+      1: { 0: [41, 173, 255], 1: [41, 173, 255] }
     }
     self.assertEqual(result, expected_result)
 
@@ -52,8 +52,8 @@ class CreatePixelDataCase(unittest.TestCase):
     image = cv.imread('2x2-red-blue-red-blue.png')
     result = create_pixel_data(image)
     expected_result = {
-      0: { 0: [255, 0, 77], 1: [255, 0, 77] },
-      1: { 0: [41, 173, 255], 1: [41, 173, 255] }
+      0: { 0: [255, 0, 77], 1: [41, 173, 255] },
+      1: { 0: [255, 0, 77], 1: [41, 173, 255] }
     }
     self.assertEqual(result, expected_result)
 
@@ -62,10 +62,13 @@ class CreatePixelDataCase(unittest.TestCase):
     image = cv.imread('2x2-red-blue-green-yellow.png')
     result = create_pixel_data(image)
     expected_result = {
-      0: { 0: [255, 0, 77], 1: [0, 228, 54] },
-      1: { 0: [41, 173, 255], 1: [255, 236, 39] }
+      0: { 0: [255, 0, 77], 1: [41, 173, 255] },
+      1: { 0: [0, 228, 54], 1: [255, 236, 39] }
     }
     self.assertEqual(result, expected_result)
+
+if __name__ == '__main__':
+    unittest.main()
 
   
 

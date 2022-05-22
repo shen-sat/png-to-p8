@@ -1,10 +1,8 @@
-import cv2 as cv
+def is_column_same_color(row_i, column_i, min_row_i, pixel_data):
+  color = pixel_data[row_i][column_i]
 
-def is_column_same_color(row, column, min_row, pixel_data):
-  color = pixel_data[row][column]
-
-  for current_row in range(min_row,(row + 1)):
-    if pixel_data[current_row][column] != color:
+  for current_row_i in range(min_row_i, row_i):
+    if pixel_data[current_row_i][column_i] != color:
       return False
 
   return True

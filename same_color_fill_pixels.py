@@ -1,4 +1,9 @@
-def same_color_fill_pixels(origin_pixel, corner_pixel, pixel_data):
+class PixelNotFound(Exception):
+    pass
+
+
+
+def is_rect(origin_pixel, corner_pixel, pixel_data):
   min_y = origin_pixel[0]
   min_x = origin_pixel[1]
   color = origin_pixel[2]
@@ -6,30 +11,24 @@ def same_color_fill_pixels(origin_pixel, corner_pixel, pixel_data):
   max_y = corner_pixel[0]
   max_x = corner_pixel[1]
 
-  pixels = []
-
   for y in range(min_y, max_y + 1):
     for x in range(min_x, max_x + 1):
-      print(f'for {y} and {x} trying to get pixel...')
       try:
+        print(f'checking pixel at y:{y}, x:{x}...')
         pixel = pixel_data[y][x]
       except KeyError:
-        print('pixel does not exist')
-        return None    
+        raise PixelNotFound(f'y:{y} and x:{x}')
 
       if pixel == origin_pixel:
         print('pixel is origin')
         continue
       elif pixel == corner_pixel:
-        print('pixel is corner')
-        return pixels
+        print('pixel is corner, so we have finished!')
+        return True
       else:
-        print('adding pixel to pixels')
-        if pixel[2] == color:
-          pixels += [ pixel ]
-        else:
-          print('pixel is not required color')
-          return pixels
+        if pixel[2] != color:
+          print(f'pixel:{pixel} is not same color as origin_pixel:{origin_pixel}')
+          return False
 
 # Tests
 
@@ -45,14 +44,10 @@ class SameColorFillPixels(unittest.TestCase):
 
     origin_pixel = pixel_data[0][0]
     corner_pixel = pixel_data[1][1]
-    expected_result = [
-      [0,1,['XXX']],
-      [1,0,['XXX']] 
-    ]
 
-    result = same_color_fill_pixels(origin_pixel, corner_pixel, pixel_data)
+    result = is_rect(origin_pixel, corner_pixel, pixel_data)
 
-    self.assertEqual(result, expected_result)
+    self.assertEqual(result, True)
 
   # def test_corner_is_NOT_present(self):
   #   pixel_data = {
@@ -63,7 +58,7 @@ class SameColorFillPixels(unittest.TestCase):
 
   #   origin_pixel = pixel_data[0][0]
 
-  #   result = same_color_fill_pixels(origin_pixel, pixel_data)
+  #   result = is_rect(origin_pixel, pixel_data)
 
   #   self.assertEqual(result, None)
 
@@ -74,7 +69,7 @@ class SameColorFillPixels(unittest.TestCase):
 
   #   origin_pixel = pixel_data[0][0]
 
-  #   result = same_color_fill_pixels(origin_pixel, pixel_data)
+  #   result = is_rect(origin_pixel, pixel_data)
 
   #   self.assertEqual(result, None)
 
@@ -88,7 +83,7 @@ class SameColorFillPixels(unittest.TestCase):
   #   origin_pixel = pixel_data[0][0]
   #   corner_pixel = pixel_data[2][2]
 
-  #   result = same_color_fill_pixels(origin_pixel, pixel_data)
+  #   result = is_rect(origin_pixel, pixel_data)
 
   #   self.assertEqual(result, None)
 

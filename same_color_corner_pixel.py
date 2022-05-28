@@ -3,22 +3,28 @@ def same_color_corner_pixel(pixel, pixel_data, is_origin_pixel=True):
   x = pixel[1]
   color = pixel[2]
 
-  #does next corner pixel exist?
   try:
+    print(f'checking pixel at y:{y}, x:{x}...')
     corner_pixel = pixel_data[y + 1][x + 1]
   except KeyError:
+    print(f'y:{y}, x:{x} is out of bounds')
     if is_origin_pixel:
+      print(f'[AAA] no corners found')
       return None
     else:
+      print(f'[AAA] returning last corner found')
       return pixel
   
-  #is next corner pixel same color?
   if corner_pixel[2] == color:
+    print(f'current corner color matches origin color')
     return same_color_corner_pixel(corner_pixel, pixel_data, False)
   else:
+    print(f'current corner color does not match origin color')
     if is_origin_pixel:
+      print(f'[BBB] no corners found')
       return None
     else:
+      print(f'[BBB] returning last corner found')
       return pixel
 
 # Tests

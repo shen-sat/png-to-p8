@@ -1,3 +1,59 @@
+FirstPixelGetter
+Input:
+	- pixel data
+Output:
+	- origin pixel, pixel data
+
+SquareGetter
+Input:
+- origin_pixel, pixel data
+Output:
+- if square: call to PixelChomper with start pixel, end pixel, pixel data
+- if no square: call to HorizontalLineGetter with origin pixel, pixel data
+
+HorizontalLineGetter
+Input:
+- origin_pixel, pixel data
+Output:
+- if h_line: call to PixelChomper with start pixel, end pixel, pixel data
+- if no h_line: call to VerticalLineGetter with origin pixel, pixel data
+
+VerticalLineGetter
+Input:
+- origin_pixel, pixel data
+Output:
+- THIS IS INTERESTING: we can ALWAYS call PixelChomper at this point:
+	- if v_line: call to PixelChomper with start pixel, end pixel, pixel data
+	- if no v_line: STILL call to PixelChomper with start pixel, end pixel, pixel data:
+		- but this time, start pixel and end pixel will BOTH be origin pixel
+
+PixelChomper
+Input:
+- start pixel, end pixel, pixel data
+Output:
+- always call to ResultsCompiler with start_pixel, end pixel, AMENDED pixel data
+
+ResultsCompiler
+This class is initialized with an empty results hash
+Input:
+- start_pixel, end pixel, pixel data
+Logic:
+- adds to results hash
+Output:
+- if pixel data empty: returns results hash
+- if pixel data not empty: calls FirstPixelGetter with pixel data
+
+----
+A way to delete (and return) a pixel: pixel_data[0].pop(0)
+
+Example of testing raise:
+	with self.assertRaises(PixelNotFound) as context:
+	  is_rect(origin_pixel, corner_pixel, pixel_data)
+
+	self.assertTrue('y:0, x:1' in str(context.exception))
+
+
+
 TODO:
 - MVP 1:
 	- input: an array of tuples representing a red square

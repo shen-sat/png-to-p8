@@ -109,6 +109,19 @@ class Handle(unittest.TestCase):
 
     self.assertEqual(result, 'call pixel chomper with start and end pixels')
 
+  def test_vertical_and_horizontal_lines_and_pixels_with_square(self):
+    pixel_data = {
+      1: { 21: [1,21,['$$$']], 22: [1,22,['+++']], 23: [1,23,['+++']] },
+      2: { 21: [2,21,['•••']], 22: [2,22,['•••']], 23: [2,23,['&&&']] },
+      3: { 21: [3,21,['•••']], 22: [3,22,['•••']], 23: [3,23,['&&&']] }
+    }
+
+    origin_pixel = pixel_data[2][21]
+
+    result = SquareGetter.handle(origin_pixel, pixel_data)
+
+    self.assertEqual(result, 'call pixel chomper with start and end pixels')
+
 if __name__ == '__main__':
     unittest.main()
 

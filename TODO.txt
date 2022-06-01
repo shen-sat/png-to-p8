@@ -26,6 +26,9 @@ Test cases:
 	- single pixel with diff color pixel next to it
 	- single pixel with gap next to it
 	- vertical line
+- happy:
+	- horizontal line
+	- horizontal line and vertical line
 	
 
 VerticalLineGetter

@@ -66,6 +66,20 @@ class Handle(unittest.TestCase):
 
     self.assertEqual(result, 'call next handler with origin pixel and pixel data')
 
+
+  def test_vertical_and_horizontal_lines_and_pixels_only(self):
+    pixel_data = {
+      1: { 21: [1,21,['$$$']], 22: [1,22,['+++']], 23: [1,23,['@@@']] },
+      2: { 21: [2,21,['XXX']], 22: [2,22,['!!!']], 23: [2,23,['&&&']] },
+      3: { 21: [3,21,['XXX']], 22: [3,22,['•••']], 23: [3,23,['•••']] }
+    }
+
+    origin_pixel = pixel_data[1][21]
+
+    result = SquareGetter.handle(origin_pixel, pixel_data)
+
+    self.assertEqual(result, 'call next handler with origin pixel and pixel data')
+
   # ---------------------------------------- When square exists ----------------------------------------
 
   def test_square_is_present(self):

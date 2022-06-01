@@ -1,36 +1,19 @@
-import cv2 as cv
-
-def create_pixel_data(image):
-  pixel_data = {}
-  for y, row in enumerate(image):
-    for x, column in enumerate(row):
-      if y in pixel_data:
-        pixel_data[y][x] = [column[2],column[1],column[0]]
-      else:
-        pixel_data[y] = {}
-        pixel_data[y][x] = [column[2],column[1],column[0]]
-
-  return pixel_data
-
-# Tests
-
 import unittest
+from create_pixel_data import CreatePixelData
 
 class CreatePixelDataCase(unittest.TestCase):
 
   def test_1x1_red(self):
-    
-    image = cv.imread('1x1-red.png')
-    result = create_pixel_data(image)
+    result = CreatePixelData.create_pixel_data('1x1-red.png')
+
     expected_result = {
       0: { 0:[255,0,77] }
     }
     self.assertEqual(result, expected_result)
 
   def test_2x2_red(self):
+    result = CreatePixelData.create_pixel_data('2x2-red.png')
     
-    image = cv.imread('2x2-red.png')
-    result = create_pixel_data(image)
     expected_result = {
       0: { 0: [255,0,77], 1: [255,0,77] },
       1: { 0: [255,0,77], 1: [255,0,77] }
@@ -38,9 +21,8 @@ class CreatePixelDataCase(unittest.TestCase):
     self.assertEqual(result, expected_result)
 
   def test_2x2_red_red_blue_blue(self):
+    result = CreatePixelData.create_pixel_data('2x2-red-red-blue-blue.png')
     
-    image = cv.imread('2x2-red-red-blue-blue.png')
-    result = create_pixel_data(image)
     expected_result = {
       0: { 0: [255,0,77],   1: [255,0,77] },
       1: { 0: [41,173,255], 1: [41,173,255] }
@@ -48,9 +30,8 @@ class CreatePixelDataCase(unittest.TestCase):
     self.assertEqual(result, expected_result)
 
   def test_2x2_red_blue_red_blue(self):
+    result = CreatePixelData.create_pixel_data('2x2-red-blue-red-blue.png')
     
-    image = cv.imread('2x2-red-blue-red-blue.png')
-    result = create_pixel_data(image)
     expected_result = {
       0: { 0: [255,0,77], 1: [41,173,255] },
       1: { 0: [255,0,77], 1: [41,173,255] }
@@ -58,9 +39,8 @@ class CreatePixelDataCase(unittest.TestCase):
     self.assertEqual(result, expected_result)
 
   def test_2x2_red_blue_green_yellow(self):
+    result = CreatePixelData.create_pixel_data('2x2-red-blue-green-yellow.png')
     
-    image = cv.imread('2x2-red-blue-green-yellow.png')
-    result = create_pixel_data(image)
     expected_result = {
       0: { 0: [255,0,77], 1: [41,173,255] },
       1: { 0: [0,228,54], 1: [255,236,39] }

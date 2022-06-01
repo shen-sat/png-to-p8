@@ -13,9 +13,7 @@ class SquareGetter:
 			
 	@classmethod
 	def corner(self, y_x, pixel_data, is_origin=True):
-	  y = y_x[0]
-	  x = y_x[1]
-	  color = pixel_data[y][x]
+	  y, x, color = self.__pixel(y_x, pixel_data)
 
 	  try:
 	    pixel_data[y + 1][x + 1]
@@ -33,11 +31,9 @@ class SquareGetter:
 	    else:
 	      return [y, x] 
 
-	@staticmethod
-	def is_square(origin, corner, pixel_data):
-	  min_y = origin[0]
-	  min_x = origin[1]
-	  origin_color = pixel_data[min_y][min_x]
+	@classmethod
+	def is_square(self, origin, corner, pixel_data):
+	  min_y, min_x, origin_color = self.__pixel(origin, pixel_data)
 
 	  max_y = corner[0]
 	  max_x = corner[1]
@@ -53,3 +49,11 @@ class SquareGetter:
 	      	return False
 
 	    return True
+
+	@staticmethod
+	def __pixel(y_x, pixel_data):
+		y = y_x[0]
+		x = y_x[1]
+		color = pixel_data[y][x]
+
+		return y, x, color

@@ -8,9 +8,9 @@ class SquareGetter:
 		corner_pixel = self.corner_pixel(origin_pixel, pixel_data)
 
 		if corner_pixel and self.is_square(origin_pixel, corner_pixel, pixel_data):
-			return 'add to output hash, call get_first_pixel with amended pixel data'
+			return 'call pixel chomper with start and end pixels'
 		else:
-			return 'call next handler with origin pixel'
+			return 'call next handler with origin pixel and pixel data'
 			
 	@classmethod
 	def corner_pixel(self, pixel, pixel_data, is_origin_pixel=True):

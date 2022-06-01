@@ -10,6 +10,9 @@ Input:
 Output:
 - if square: call to PixelChomper with start pixel, end pixel, pixel data
 - if no square: call to HorizontalLineGetter with origin pixel, pixel data
+Test cases:
+- with single pixel, vertical line and horizontal line
+	- should call next handler with origin pixel and pixel data
 
 HorizontalLineGetter
 Input:
@@ -17,6 +20,13 @@ Input:
 Output:
 - if h_line: call to PixelChomper with start pixel, end pixel, pixel data
 - if no h_line: call to VerticalLineGetter with origin pixel, pixel data
+Test cases:
+- unhappy:
+	- single pixel
+	- single pixel with diff color pixel next to it
+	- single pixel with gap next to it
+	- vertical line
+	
 
 VerticalLineGetter
 Input:

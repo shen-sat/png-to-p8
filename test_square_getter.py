@@ -3,7 +3,8 @@ from square_getter import SquareGetter
 
 class Handle(unittest.TestCase):
 
-  # ---------------------------------------- When corner does not exist ----------------------------------------
+# ---------------------------------------- When square does not exist ----------------------------------------
+
   def test_one_pixel(self):
     pixel_data = {
       0: { 0: [0,0,['XXX']] }
@@ -11,13 +12,11 @@ class Handle(unittest.TestCase):
 
     origin_pixel = pixel_data[0][0]
 
-    output = {}
-
     result = SquareGetter.handle(origin_pixel, pixel_data)
 
-    self.assertEqual(result, 'call next handler with origin pixel')
+    self.assertEqual(result, 'call next handler with origin pixel and pixel data')
 
-  def test_corner_is_NOT_present(self):
+  def test_square_is_not_present_FILL_CENTER(self):
     pixel_data = {
       0: { 0: [0,0,['XXX']], 1: [0,1,['XXX']], 2: [0,2,['XXX']] },
       1: { 0: [1,0,['XXX']], 1: [1,1,['•••']], 2: [1,2,['XXX']] },
@@ -26,13 +25,11 @@ class Handle(unittest.TestCase):
 
     origin_pixel = pixel_data[0][0]
 
-    output = {}
-
     result = SquareGetter.handle(origin_pixel, pixel_data)
 
-    self.assertEqual(result, 'call next handler with origin pixel')
+    self.assertEqual(result, 'call next handler with origin pixel and pixel data')
 
-  def test_corner_gap_is_present(self):
+  def test_square_is_not_present_GAP_CENTER(self):
     pixel_data = {
       0: { 0: [0,0,['XXX']], 1: [0,1,['XXX']], 2: [0,2,['XXX']] },
       1: { 0: [1,0,['XXX']],                   2: [1,2,['XXX']] },
@@ -41,15 +38,11 @@ class Handle(unittest.TestCase):
 
     origin_pixel = pixel_data[0][0]
 
-    output = {}
-
     result = SquareGetter.handle(origin_pixel, pixel_data)
 
-    self.assertEqual(result, 'call next handler with origin pixel')
+    self.assertEqual(result, 'call next handler with origin pixel and pixel data')
 
-  # ---------------------------------------- When fill does not exist ----------------------------------------
-
-  def test_fill_is_NOT_present(self):
+  def test_square_is_not_present_FILL_CORNER(self):
     pixel_data = {
       0: { 0: [0,0,['XXX']], 1: [0,1,['•••']] },
       1: { 0: [1,0,['XXX']], 1: [1,1,['XXX']] },
@@ -57,29 +50,25 @@ class Handle(unittest.TestCase):
 
     origin_pixel = pixel_data[0][0]
 
-    output = {}
-
     result = SquareGetter.handle(origin_pixel, pixel_data)
 
-    self.assertEqual(result, 'call next handler with origin pixel')
+    self.assertEqual(result, 'call next handler with origin pixel and pixel data')
 
-  def test_pixel_data_has_gaps(self):
+  def test_square_is_not_present_GAP_CORNER(self):
     pixel_data = {
-      0: { 0: [0,0,['XXX']]                   },
-      1: { 0: [1,0,['XXX']], 1: [1,1,['XXX']] }
+      0: { 0: [0,0,['XXX']],  1: [0,1,['XXX']] },
+      1: { 0: [1,0,['XXX']]                  }
     }
 
     origin_pixel = pixel_data[0][0]
 
-    output = {}
-
     result = SquareGetter.handle(origin_pixel, pixel_data)
 
-    self.assertEqual(result, 'call next handler with origin pixel')
+    self.assertEqual(result, 'call next handler with origin pixel and pixel data')
 
   # ---------------------------------------- When square exists ----------------------------------------
 
-  def test_rect_is_present(self):
+  def test_square_is_present(self):
     pixel_data = {
       0: { 0: [0,0,['XXX']], 1: [0,1,['XXX']] },
       1: { 0: [1,0,['XXX']], 1: [1,1,['XXX']] }
@@ -87,13 +76,11 @@ class Handle(unittest.TestCase):
 
     origin_pixel = pixel_data[0][0]
 
-    output = {}
-
     result = SquareGetter.handle(origin_pixel, pixel_data)
 
-    self.assertEqual(result, 'add to output hash, call get_first_pixel with amended pixel data')
+    self.assertEqual(result, 'call pixel chomper with start and end pixels')
 
-  def test_rect_is_present_within_other_pixels(self):
+  def test_square_is_present_within_other_pixels(self):
     pixel_data = {
       0: { 0: [0,0,['•••']], 1: [0,1,['•••']], 2: [0,2,['•••']], 3: [0,3,['•••']], 4: [0,4,['•••']] },
       1: { 0: [1,0,['•••']], 1: [1,1,['XXX']], 2: [1,2,['XXX']], 3: [1,3,['XXX']], 4: [1,4,['•••']] },
@@ -104,11 +91,9 @@ class Handle(unittest.TestCase):
 
     origin_pixel = pixel_data[1][1]
 
-    output = {}
-
     result = SquareGetter.handle(origin_pixel, pixel_data)
 
-    self.assertEqual(result, 'add to output hash, call get_first_pixel with amended pixel data')
+    self.assertEqual(result, 'call pixel chomper with start and end pixels')
 
 if __name__ == '__main__':
     unittest.main()

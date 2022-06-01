@@ -3,57 +3,53 @@
 class SquareGetter:
 
 	@classmethod
-	def handle(self, origin_pixel, pixel_data):
-	
-		corner_pixel = self.corner_pixel(origin_pixel, pixel_data)
+	def handle(self, origin, pixel_data):
+		corner = self.corner(origin, pixel_data)
 
-		if corner_pixel and self.is_square(origin_pixel, corner_pixel, pixel_data):
+		if corner and self.is_square(origin, corner, pixel_data):
 			return 'call pixel chomper with start and end pixels'
 		else:
 			return 'call next handler with origin pixel and pixel data'
 			
 	@classmethod
-	def corner_pixel(self, pixel, pixel_data, is_origin_pixel=True):
-	  y = pixel[0]
-	  x = pixel[1]
-	  color = pixel[2]
+	def corner(self, y_x, pixel_data, is_origin=True):
+	  y = y_x[0]
+	  x = y_x[1]
+	  color = pixel_data[y][x]
 
 	  try:
-	    corner_pixel = pixel_data[y + 1][x + 1]
+	    pixel_data[y + 1][x + 1]
 	  except KeyError:
-	    if is_origin_pixel:
+	    if is_origin:
 	      return None
 	    else:
-	      return pixel
+	      return [y, x]
 	  
-	  if corner_pixel[2] == color:
-	    return self.corner_pixel(corner_pixel, pixel_data, False)
+	  if pixel_data[y + 1][x + 1] == color:
+	    return self.corner([y + 1, x + 1], pixel_data, False)
 	  else:
-	    if is_origin_pixel:
+	    if is_origin:
 	      return None
 	    else:
-	      return pixel 
+	      return [y, x] 
 
 	@staticmethod
-	def is_square(origin_pixel, corner_pixel, pixel_data):
-	  min_y = origin_pixel[0]
-	  min_x = origin_pixel[1]
-	  color = origin_pixel[2]
+	def is_square(origin, corner, pixel_data):
+	  min_y = origin[0]
+	  min_x = origin[1]
+	  origin_color = pixel_data[min_y][min_x]
 
-	  max_y = corner_pixel[0]
-	  max_x = corner_pixel[1]
+	  max_y = corner[0]
+	  max_x = corner[1]
 
 	  for y in range(min_y, max_y + 1):
 	    for x in range(min_x, max_x + 1):
 	      try:
-	        pixel = pixel_data[y][x]
+	        pixel_data[y][x]
 	      except KeyError:
 	        return False
 
-	      if pixel == origin_pixel:
-	        continue
-	      elif pixel == corner_pixel:
-	        return True
-	      else:
-	        if pixel[2] != color:
-	          return False
+	      if pixel_data[y][x] != origin_color:
+	      	return False
+
+	    return True

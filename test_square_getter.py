@@ -7,118 +7,118 @@ class Handle(unittest.TestCase):
 
   def test_one_pixel(self):
     pixel_data = {
-      0: { 0: [0,0,['XXX']] }
+      0: { 0: ['XXX'] }
     }
 
-    origin_pixel = pixel_data[0][0]
+    origin = [0,0]
 
-    result = SquareGetter.handle(origin_pixel, pixel_data)
+    result = SquareGetter.handle(origin, pixel_data)
 
     self.assertEqual(result, 'call next handler with origin pixel and pixel data')
 
-  def test_square_is_not_present_FILL_CENTER(self):
+  def test_center_different(self):
     pixel_data = {
-      0: { 0: [0,0,['XXX']], 1: [0,1,['XXX']], 2: [0,2,['XXX']] },
-      1: { 0: [1,0,['XXX']], 1: [1,1,['•••']], 2: [1,2,['XXX']] },
-      2: { 0: [2,0,['XXX']], 1: [2,1,['XXX']], 2: [2,2,['XXX']] }
+      0: { 0: ['XXX'], 1: ['XXX'], 2: ['XXX'] },
+      1: { 0: ['XXX'], 1: ['•••'], 2: ['XXX'] },
+      2: { 0: ['XXX'], 1: ['XXX'], 2: ['XXX'] }
     }
 
-    origin_pixel = pixel_data[0][0]
+    origin = [0,0] 
 
-    result = SquareGetter.handle(origin_pixel, pixel_data)
+    result = SquareGetter.handle(origin, pixel_data)
 
     self.assertEqual(result, 'call next handler with origin pixel and pixel data')
 
-  def test_square_is_not_present_GAP_CENTER(self):
+  def test_gap_center(self):
     pixel_data = {
-      0: { 0: [0,0,['XXX']], 1: [0,1,['XXX']], 2: [0,2,['XXX']] },
-      1: { 0: [1,0,['XXX']],                   2: [1,2,['XXX']] },
-      2: { 0: [2,0,['XXX']], 1: [2,1,['XXX']], 2: [2,2,['XXX']] }
+      0: { 0: ['XXX'], 1: ['XXX'], 2: ['XXX'] },
+      1: { 0: ['XXX'],             2: ['XXX'] },
+      2: { 0: ['XXX'], 1: ['XXX'], 2: ['XXX'] }
     }
 
-    origin_pixel = pixel_data[0][0]
+    origin = [0,0] 
 
-    result = SquareGetter.handle(origin_pixel, pixel_data)
+    result = SquareGetter.handle(origin, pixel_data)
 
     self.assertEqual(result, 'call next handler with origin pixel and pixel data')
 
-  def test_square_is_not_present_FILL_CORNER(self):
+  def test_corner_different(self):
     pixel_data = {
-      0: { 0: [0,0,['XXX']], 1: [0,1,['•••']] },
-      1: { 0: [1,0,['XXX']], 1: [1,1,['XXX']] },
+      0: { 0: ['XXX'], 1: ['•••'] },
+      1: { 0: ['XXX'], 1: ['XXX'] }
     }
 
-    origin_pixel = pixel_data[0][0]
+    origin = [0,0] 
 
-    result = SquareGetter.handle(origin_pixel, pixel_data)
+    result = SquareGetter.handle(origin, pixel_data)
 
     self.assertEqual(result, 'call next handler with origin pixel and pixel data')
 
-  def test_square_is_not_present_GAP_CORNER(self):
+  def test_gap_corner(self):
     pixel_data = {
-      0: { 0: [0,0,['XXX']],  1: [0,1,['XXX']] },
-      1: { 0: [1,0,['XXX']]                  }
+      0: { 0: ['XXX'],  1: ['XXX'] },
+      1: { 0: ['XXX']              }
     }
 
-    origin_pixel = pixel_data[0][0]
+    origin = [0,0] 
 
-    result = SquareGetter.handle(origin_pixel, pixel_data)
+    result = SquareGetter.handle(origin, pixel_data)
 
     self.assertEqual(result, 'call next handler with origin pixel and pixel data')
 
 
-  def test_vertical_and_horizontal_lines_and_pixels_only(self):
+  def test_other_shapes_only(self):
     pixel_data = {
-      1: { 21: [1,21,['$$$']], 22: [1,22,['+++']], 23: [1,23,['@@@']] },
-      2: { 21: [2,21,['XXX']], 22: [2,22,['!!!']], 23: [2,23,['&&&']] },
-      3: { 21: [3,21,['XXX']], 22: [3,22,['•••']], 23: [3,23,['•••']] }
+      1: { 21: ['$$$'], 22: ['+++'], 23: ['@@@'] },
+      2: { 21: ['XXX'], 22: ['!!!'], 23: ['&&&'] },
+      3: { 21: ['XXX'], 22: ['•••'], 23: ['•••'] }
     }
 
-    origin_pixel = pixel_data[1][21]
+    origin = [1,21] 
 
-    result = SquareGetter.handle(origin_pixel, pixel_data)
+    result = SquareGetter.handle(origin, pixel_data)
 
     self.assertEqual(result, 'call next handler with origin pixel and pixel data')
 
-  # ---------------------------------------- When square exists ----------------------------------------
+# ---------------------------------------- When square exists ----------------------------------------
 
-  def test_square_is_present(self):
+  def test_square(self):
     pixel_data = {
-      0: { 0: [0,0,['XXX']], 1: [0,1,['XXX']] },
-      1: { 0: [1,0,['XXX']], 1: [1,1,['XXX']] }
+      0: { 0: ['XXX'], 1: ['XXX'] },
+      1: { 0: ['XXX'], 1: ['XXX'] }
     }
 
-    origin_pixel = pixel_data[0][0]
+    origin = [0,0] 
 
-    result = SquareGetter.handle(origin_pixel, pixel_data)
+    result = SquareGetter.handle(origin, pixel_data)
 
     self.assertEqual(result, 'call pixel chomper with start and end pixels')
 
-  def test_square_is_present_within_other_pixels(self):
+  def test_square_within_other_pixels(self):
     pixel_data = {
-      0: { 0: [0,0,['•••']], 1: [0,1,['•••']], 2: [0,2,['•••']], 3: [0,3,['•••']], 4: [0,4,['•••']] },
-      1: { 0: [1,0,['•••']], 1: [1,1,['XXX']], 2: [1,2,['XXX']], 3: [1,3,['XXX']], 4: [1,4,['•••']] },
-      2: { 0: [2,0,['•••']], 1: [2,1,['XXX']], 2: [2,2,['XXX']], 3: [2,3,['XXX']], 4: [2,4,['•••']] },
-      3: { 0: [3,0,['•••']], 1: [3,1,['XXX']], 2: [3,2,['XXX']], 3: [3,3,['XXX']], 4: [3,4,['•••']] },
-      4: { 0: [4,0,['•••']], 1: [4,1,['•••']], 2: [4,2,['•••']], 3: [4,3,['•••']], 4: [4,4,['•••']] }
+      0: { 0: ['•••'], 1: ['•••'], 2: ['•••'], 3: ['•••'], 4: ['•••'] },
+      1: { 0: ['•••'], 1: ['XXX'], 2: ['XXX'], 3: ['XXX'], 4: ['•••'] },
+      2: { 0: ['•••'], 1: ['XXX'], 2: ['XXX'], 3: ['XXX'], 4: ['•••'] },
+      3: { 0: ['•••'], 1: ['XXX'], 2: ['XXX'], 3: ['XXX'], 4: ['•••'] },
+      4: { 0: ['•••'], 1: ['•••'], 2: ['•••'], 3: ['•••'], 4: ['•••'] }
     }
 
-    origin_pixel = pixel_data[1][1]
+    origin = [1,1] 
 
-    result = SquareGetter.handle(origin_pixel, pixel_data)
+    result = SquareGetter.handle(origin, pixel_data)
 
     self.assertEqual(result, 'call pixel chomper with start and end pixels')
 
-  def test_vertical_and_horizontal_lines_and_pixels_with_square(self):
+  def test_square_with_other_shapes(self):
     pixel_data = {
-      1: { 21: [1,21,['$$$']], 22: [1,22,['+++']], 23: [1,23,['+++']] },
-      2: { 21: [2,21,['•••']], 22: [2,22,['•••']], 23: [2,23,['&&&']] },
-      3: { 21: [3,21,['•••']], 22: [3,22,['•••']], 23: [3,23,['&&&']] }
+      1: { 21: ['$$$'], 22: ['+++'], 23: ['+++'] },
+      2: { 21: ['•••'], 22: ['•••'], 23: ['&&&'] },
+      3: { 21: ['•••'], 22: ['•••'], 23: ['&&&'] }
     }
 
-    origin_pixel = pixel_data[2][21]
+    origin = [2,21] 
 
-    result = SquareGetter.handle(origin_pixel, pixel_data)
+    result = SquareGetter.handle(origin, pixel_data)
 
     self.assertEqual(result, 'call pixel chomper with start and end pixels')
 

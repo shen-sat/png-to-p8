@@ -12,7 +12,7 @@ class FirstPixelGetter:
 				continue
 			else:
 				for x in pixel_data[y]:
-					return pixel_data[y][x]
+					return [y, x]
 
 		raise EmptyPixelDataException
 

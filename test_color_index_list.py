@@ -57,6 +57,12 @@ class Create(unittest.TestCase):
 
     self.assertEqual(result, expected_result)
 
+  def test_transpareny(self):
+    result = ColorIndexList.create('1x1-transparent.png')
+    expected_result = [ 16 ]
+
+    self.assertEqual(result, expected_result)
+
 if __name__ == '__main__':
     unittest.main()
 

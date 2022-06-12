@@ -1,4 +1,6 @@
 import unittest
+import json
+
 from color_index_list import ColorIndexList
 
 class Create(unittest.TestCase):
@@ -44,6 +46,15 @@ class Create(unittest.TestCase):
       8,  12,
       11, 10
     ]
+    self.assertEqual(result, expected_result)
+
+  def test_128x128_all_colors(self):
+    result = ColorIndexList.create('128x128-all-colors.png')
+
+    fixture = open("fixture_128x128_all_colors.txt")
+    expected_result = json.load(fixture)
+    fixture.close()
+
     self.assertEqual(result, expected_result)
 
 if __name__ == '__main__':

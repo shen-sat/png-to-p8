@@ -48,14 +48,13 @@ class Create(unittest.TestCase):
     ]
     self.assertEqual(result, expected_result)
 
-  def test_128x128_all_colors(self):
-    result = ColorIndexList.create('128x128-all-colors.png')
-
+  def test_128x128_all_colors_including_transparency(self):
+    result = ColorIndexList.create('128x128-all-colors-including-transparency.png')
     fixture = open("fixture_128x128_all_colors.txt")
     expected_result = json.load(fixture)
     fixture.close()
-
-    self.assertEqual(result, expected_result)
+    # unittest struggles when lists are large and test fails, so I had to write it like this:
+    self.assertEqual(result == expected_result, True)
 
   def test_transpareny(self):
     result = ColorIndexList.create('1x1-transparent.png')
